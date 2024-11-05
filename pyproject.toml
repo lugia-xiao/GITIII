@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gitiii"
+version = "0.1.0"
+description = "Investigation of pair-wise single cell interactions through statistically interpreting spatial cell state correlations learned by self-supervised graph inductive bias transformer"
+authors = [
+    { name = "Xiao Xiao", email = "xiao.xiao.xx244@yale.edu" }
+]
+license = { text = "GPL-3.0" }
+readme = "README.md"
+requires-python = ">=3.6"
+dependencies = [
+    "torch",
+    "pandas",
+    "monotonicnetworks",
+    "scipy",
+    "scanpy",
+    "anndata",
+    "statsmodels",
+    "scikit-learn",  # note the correct naming for scikit-learn
+    "numpy",
+    "matplotlib",
+    "maxfuse",
+    "seaborn"
+]
+classifiers = [
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Operating System :: OS Independent"
+]
+
+[tool.setuptools.package-data]
+"gitiii" = [
+    "data/interactions_human.pth",
+    "data/interactions_human_nonichenetv2.pth",
+    "data/interactions_mouse.pth",
+    "data/interactions_mouse_nonichenetv2.pth"
+]

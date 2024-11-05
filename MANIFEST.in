@@ -1,0 +1,17 @@
+# Include the LICENSE file
+include LICENSE
+
+# Include the README.md file
+include README.md
+
+# Include the package data files in the gitiii/data/ directory
+recursive-include gitiii/data *.pth
+recursive-include gitiii/data __init__.py
+
+# Include all .py files in the gitiii package
+recursive-include gitiii *.py
+
+# Exclude unnecessary files from the package distribution
+exclude *.pyc
+exclude __pycache__/
+exclude .idea/

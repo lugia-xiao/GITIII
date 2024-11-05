@@ -1,0 +1,9 @@
+genes=['PRRT4', 'GRIP2', 'FOXP2', 'PDZD2', 'KIAA1217', 'PALMD', 'LRRC4C', 'ASIC2', 'NPAS3', 'LUZP2', 'GRIN2A', 'NLGN1', 'NTNG2', 'TACR1', 'PDGFD', 'ANK1', 'DLX1', 'CBLN2', 'ZNF804A', 'CACNA2D3', 'CDH6', 'CD22', 'ETNPPL', 'CALB1', 'TSHZ2', 'FGF13', 'KIRREL3', 'ROBO1', 'RBFOX3', 'ASTN2', 'ID3', 'TH', 'TENM2', 'ZMAT4', 'CLSTN2', 'SEMA6D', 'HPSE2', 'BTBD11', 'LRP1B', 'NOS1', 'GPC5', 'SNTB1', 'COL11A1', 'TMEM255A', 'SATB2', 'SORCS3', 'FBXL7', 'GRM8', 'GALNTL6', 'NOSTRIN', 'DCC', 'SOX6', 'MEIS2', 'STXBP6', 'SMYD1', 'SCUBE1', 'LAMA4', 'CNTN5', 'GRM7', 'KCNMB2', 'CUX2', 'LAMP5', 'SLIT3', 'TAFA1', 'PRKG1', 'CSMD1', 'CNTNAP5', 'NFIA', 'FRMPD4', 'GRID2', 'HS6ST3', 'SORCS1', 'ATRNL1', 'ADAMTS3', 'SLC24A2', 'RBFOX1', 'TMEM132D', 'NKAIN2', 'PEX5L', 'TNR', 'DGKG', 'RFX3', 'UNC5B', 'HTR2A', 'RGS12', 'CACHD1', 'RORB', 'LRRK1', 'THEMIS', 'CARTPT', 'SLC32A1', 'GAD2', 'MOG', 'DCN', 'TOX', 'ZNF385D', 'PDE4B', 'GRIP1', 'ITGB8', 'PLD5', 'NPY', 'NDNF', 'SEMA3E', 'KAZN', 'DLC1', 'PLCB1', 'HCN1', 'ITGA8', 'EBF1', 'PRRX1', 'SLC14A1', 'EGFR', 'FEZF2', 'PAX6', 'ROBO2', 'SV2C', 'DCLK1', 'EYA4', 'RYR3', 'L3MBTL4', 'GRIN3A', 'CD74', 'RGS6', 'CTSS', 'KCNIP4', 'DACH1', 'HTR2C', 'PVALB', 'HS3ST2', 'GRIK3', 'FGF12', 'LHX6', 'VIP', 'CA10', 'ADAMTSL1', 'CHODL', 'SULF1', 'NRG1', 'NXPH2', 'TLL1']
+
+# Import necessary python packages
+import gitiii
+
+estimator=gitiii.estimator.GITIII_estimator(df_path="./AD.csv",genes=genes,use_log_normalize=True,species="human",use_nichenetv2=True,visualize_when_preprocessing=False,distance_threshold=80,process_num_neighbors=50,num_neighbors=50,batch_size_train=256,lr=1e-4,epochs=50,node_dim=256,edge_dim=48,att_dim=8,batch_size_val=256)
+estimator.preprocess_dataset()
+estimator.train()
+estimator.calculate_influence_tensor()
