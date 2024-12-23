@@ -56,6 +56,10 @@ import gitiii
 estimator=gitiii.estimator.GITIII_estimator(df_path=df_path,genes=genes,use_log_normalize=True,species="human",use_nichenetv2=True,visualize_when_preprocessing=False,distance_threshold=80,process_num_neighbors=50,num_neighbors=50,batch_size_train=256,lr=1e-4,epochs=50,node_dim=256,edge_dim=48,att_dim=8,batch_size_val=256)
 ```
 
+:param `use_log_normalize`: bool, whether to perform log-normalization log2(x+1) here for the expression matrix
+
+ - Attention: If you would like to use your own way of data normalization or have already normalized your expression matrix in the dataframe, choose False
+
 ### Preprocess dataset
 
 ```python
