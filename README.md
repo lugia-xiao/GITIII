@@ -62,6 +62,8 @@ estimator=gitiii.estimator.GITIII_estimator(df_path=df_path,genes=genes,use_log_
 
 ### Preprocess dataset
 
+Split the cell type expression and cell state expression.
+
 ```python
 estimator.preprocess_dataset()
 ```
