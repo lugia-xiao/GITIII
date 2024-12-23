@@ -4,7 +4,7 @@
 
 ## Description
 
-GITIII is a python packaged used for analyzing cell-cell interaction (CCI) in imaging-based spatial transcriptomics with minium demand on the ligand-receptor database since many imaging-based ST datasets contain low or even no ligand-receptor pairs in the measured genes.
+GITIII is an interpretable and lightweight python packaged used for analyzing cell-cell interaction (CCI) in imaging-based spatial transcriptomics with minium demand on the ligand-receptor database since many imaging-based ST datasets contain low or even no ligand-receptor pairs in the measured genes. Generally, it takes 1 hour to run on a dataset with 366,272 cells and 140 genes, the running time increase linearly with the number of cells and number of genes.
 
 The main functionalities of GITIII includes:
 1. Estimating the influence tensor that describe how each cell is influenced by its top k (default 50) nearest neighbors
