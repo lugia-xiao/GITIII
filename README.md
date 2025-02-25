@@ -99,7 +99,7 @@ COI="L2/3 IT" # Cell Of Interest
 subtyping_analyzer.subtyping(COI=COI,resolution=0.1)
 ```
 
-**For more detailed tutorial, please refer to tutorial.nbconvert.ipynb**
+**For more detailed tutorial, please refer to tutorial_mouse_brain_MERFISH.nbconvert.ipynb and tutorial_human_AD.nbconvert.ipynb**
 
 
 
