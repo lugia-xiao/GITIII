@@ -60,12 +60,12 @@ class Subtyping_anlayzer():
         data_dir=os.path.join(os.getcwd(),"data","processed")
         if data_dir[-1]!="/":
             data_dir=data_dir+"/"
-        cell_types=torch.load(os.path.join(os.getcwd(),"data","processed","cell_types.pth"))
+        cell_types=torch.load(os.path.join(os.getcwd(),"data","processed","cell_types.pth"),weights_only=False)
         self.cell_types=cell_types
-        genes = torch.load(os.path.join(os.getcwd(),"data","genes.pth"))
+        genes = torch.load(os.path.join(os.getcwd(),"data","genes.pth"),weights_only=False)
         self.genes=genes
         type_exp_dict = np.load(os.path.join(data_dir, sample + "_TypeExp.npz"), allow_pickle=True)
-        results = torch.load(result_dir + "edges_" + sample + ".pth", map_location=torch.device('cpu'))
+        results = torch.load(result_dir + "edges_" + sample + ".pth", map_location=torch.device('cpu'),weights_only=False)
         print("Finish loading data")
 
         feature_names = []
@@ -163,6 +163,15 @@ class Subtyping_anlayzer():
             y='position_y',  # 'position_y',
             color="leiden",
             title=f"Spatial cluster of {COI}"
+        )
+
+    def visualize_spatial_gene_expression(self,gene):
+        sc.pl.scatter(
+            self.adata_type,
+            x='position_x',  # 'position_x',
+            y='position_y',  # 'position_y',
+            color=gene,
+            title=f"Spatial gene expression of {gene}"
         )
 
     def subtyping_filter_groups(self,group_to_remain):
