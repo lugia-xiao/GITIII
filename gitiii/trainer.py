@@ -44,8 +44,8 @@ def train_GITIII(num_neighbors=50,batch_size=256,lr=1e-4,data_dir=None,epochs=50
     print("Validation loader length:", len(val_loader))
 
     # Define the model
-    ligands_info = torch.load("/".join(data_dir.split("/")[:-2]) + "/ligands.pth")
-    genes = torch.load("/".join(data_dir.split("/")[:-2]) + "/genes.pth")
+    ligands_info = torch.load("/".join(data_dir.split("/")[:-2]) + "/ligands.pth",weights_only=False)
+    genes = torch.load("/".join(data_dir.split("/")[:-2]) + "/genes.pth",weights_only=False)
     my_model = GITIII(genes, ligands_info, node_dim=node_dim, edge_dim=edge_dim, num_heads=2,
                       n_layers=1, node_dim_small=16, att_dim=att_dim,
                       use_cell_type_embedding=use_cell_type_embedding)

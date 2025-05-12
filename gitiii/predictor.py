@@ -28,13 +28,13 @@ def Calculate_influence_tensor(num_neighbors=50,batch_size=128,node_dim=256,
         os.mkdir(os.path.join(os.getcwd(),"influence_tensor"))
 
     # load gene information
-    ligands_info = torch.load("/".join(data_dir.split("/")[:-2]) + "/ligands.pth")
-    genes = torch.load("/".join(data_dir.split("/")[:-2]) + "/genes.pth")
+    ligands_info = torch.load("/".join(data_dir.split("/")[:-2]) + "/ligands.pth",weights_only=False)
+    genes = torch.load("/".join(data_dir.split("/")[:-2]) + "/genes.pth",weights_only=False)
 
     # load cell type information
     cell_types_dict = {}
     cnt = 0
-    for cell_typei in torch.load(os.path.join(data_dir,"cell_types.pth")):
+    for cell_typei in torch.load(os.path.join(data_dir,"cell_types.pth"),weights_only=False):
         cell_types_dict[cnt] = cell_typei
         cnt += 1
 

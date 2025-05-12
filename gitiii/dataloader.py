@@ -18,10 +18,10 @@ class GITIII_dataset(Dataset):
         print("Have samples:",len(self.samples),self.samples)
 
         self.index_index = ["index_" + str(i) for i in range(num_neighbors)]
-        self.interactions = torch.load("/".join(processed_dir.split("/")[:-2]) + "/ligands.pth")
-        self.genes = torch.load("/".join(processed_dir.split("/")[:-2]) + "/genes.pth")
+        self.interactions = torch.load("/".join(processed_dir.split("/")[:-2]) + "/ligands.pth",weights_only=False)
+        self.genes = torch.load("/".join(processed_dir.split("/")[:-2]) + "/genes.pth",weights_only=False)
 
-        cell_types = torch.load(os.path.join(processed_dir,"cell_types.pth"))
+        cell_types = torch.load(os.path.join(processed_dir,"cell_types.pth"),weights_only=False)
         # build cell type dictionary
         self.cell_types_dict = {}
         cnt = 0
@@ -102,10 +102,10 @@ class GITIII_evaluate_dataset(Dataset):
         print("Have samples:",self.samples)
 
         self.index_index = ["index_" + str(i) for i in range(num_neighbors)]
-        self.interactions = torch.load("/".join(processed_dir.split("/")[:-2]) + "/ligands.pth")
-        self.genes = torch.load("/".join(processed_dir.split("/")[:-2]) + "/genes.pth")
+        self.interactions = torch.load("/".join(processed_dir.split("/")[:-2]) + "/ligands.pth",weights_only=False)
+        self.genes = torch.load("/".join(processed_dir.split("/")[:-2]) + "/genes.pth",weights_only=False)
 
-        cell_types = torch.load(os.path.join(processed_dir,"cell_types.pth"))
+        cell_types = torch.load(os.path.join(processed_dir,"cell_types.pth"),weights_only=False)
         # build cell type dictionary
         self.cell_types_dict = {}
         cnt = 0

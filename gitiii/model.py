@@ -79,8 +79,8 @@ if __name__=="__main__":
     data_dir = "D:/project/tmp/st/"
     from torch.utils.data import DataLoader, random_split
 
-    ligands_info = torch.load("/".join(data_dir.split("/")[:-2]) + "/ligands.pth")
-    genes = torch.load("/".join(data_dir.split("/")[:-2]) + "/genes.pth")
+    ligands_info = torch.load("/".join(data_dir.split("/")[:-2]) + "/ligands.pth",weights_only=False)
+    genes = torch.load("/".join(data_dir.split("/")[:-2]) + "/genes.pth",weights_only=False)
 
     my_model = GITIII(genes, ligands_info, node_dim=256, edge_dim=48, num_heads=2, node_dim_small=16, att_dim=8,n_layers=1)
     my_model = my_model.cuda()

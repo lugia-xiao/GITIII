@@ -1,9 +1,59 @@
-genes=['PRRT4', 'GRIP2', 'FOXP2', 'PDZD2', 'KIAA1217', 'PALMD', 'LRRC4C', 'ASIC2', 'NPAS3', 'LUZP2', 'GRIN2A', 'NLGN1', 'NTNG2', 'TACR1', 'PDGFD', 'ANK1', 'DLX1', 'CBLN2', 'ZNF804A', 'CACNA2D3', 'CDH6', 'CD22', 'ETNPPL', 'CALB1', 'TSHZ2', 'FGF13', 'KIRREL3', 'ROBO1', 'RBFOX3', 'ASTN2', 'ID3', 'TH', 'TENM2', 'ZMAT4', 'CLSTN2', 'SEMA6D', 'HPSE2', 'BTBD11', 'LRP1B', 'NOS1', 'GPC5', 'SNTB1', 'COL11A1', 'TMEM255A', 'SATB2', 'SORCS3', 'FBXL7', 'GRM8', 'GALNTL6', 'NOSTRIN', 'DCC', 'SOX6', 'MEIS2', 'STXBP6', 'SMYD1', 'SCUBE1', 'LAMA4', 'CNTN5', 'GRM7', 'KCNMB2', 'CUX2', 'LAMP5', 'SLIT3', 'TAFA1', 'PRKG1', 'CSMD1', 'CNTNAP5', 'NFIA', 'FRMPD4', 'GRID2', 'HS6ST3', 'SORCS1', 'ATRNL1', 'ADAMTS3', 'SLC24A2', 'RBFOX1', 'TMEM132D', 'NKAIN2', 'PEX5L', 'TNR', 'DGKG', 'RFX3', 'UNC5B', 'HTR2A', 'RGS12', 'CACHD1', 'RORB', 'LRRK1', 'THEMIS', 'CARTPT', 'SLC32A1', 'GAD2', 'MOG', 'DCN', 'TOX', 'ZNF385D', 'PDE4B', 'GRIP1', 'ITGB8', 'PLD5', 'NPY', 'NDNF', 'SEMA3E', 'KAZN', 'DLC1', 'PLCB1', 'HCN1', 'ITGA8', 'EBF1', 'PRRX1', 'SLC14A1', 'EGFR', 'FEZF2', 'PAX6', 'ROBO2', 'SV2C', 'DCLK1', 'EYA4', 'RYR3', 'L3MBTL4', 'GRIN3A', 'CD74', 'RGS6', 'CTSS', 'KCNIP4', 'DACH1', 'HTR2C', 'PVALB', 'HS3ST2', 'GRIK3', 'FGF12', 'LHX6', 'VIP', 'CA10', 'ADAMTSL1', 'CHODL', 'SULF1', 'NRG1', 'NXPH2', 'TLL1']
+import numpy as np
+from scipy.stats import linregress, t, nct
 
-# Import necessary python packages
-import gitiii
 
-estimator=gitiii.estimator.GITIII_estimator(df_path="./AD.csv",genes=genes,use_log_normalize=True,species="human",use_nichenetv2=True,visualize_when_preprocessing=False,distance_threshold=80,process_num_neighbors=50,num_neighbors=50,batch_size_train=256,lr=1e-4,epochs=50,node_dim=256,edge_dim=48,att_dim=8,batch_size_val=256)
-estimator.preprocess_dataset()
-estimator.train()
-estimator.calculate_influence_tensor()
+def calculate_power(x, y, beta1_alt=1, alpha=0.05):
+    """
+    Calculate the power of a test for H0: beta1 = 0 vs H1: beta1 = beta1_alt
+    given two numpy arrays x and y representing the predictor and response variables
+    for a simple linear regression without an intercept.
+
+    Parameters:
+    - x: numpy array of predictor values
+    - y: numpy array of response values
+    - beta1_alt: float, alternative hypothesis value for beta1 (default is 1)
+    - alpha: significance level (default is 0.05)
+
+    Returns:
+    - z: float, the z-score based on the correlation coefficient (r)
+    - power: float, the power of the test
+    """
+    # Estimate beta1 directly without an intercept
+    beta1_hat = np.sum(x * y) / np.sum(x ** 2)
+
+    # Calculate residuals and standard error of beta1_hat
+    residuals = y - beta1_hat * x
+    sse = np.sum(residuals ** 2)
+    std_err = np.sqrt(sse / (len(x) - 1)) / np.sqrt(np.sum(x ** 2))
+
+    # Calculate the correlation coefficient (r)
+    r_value = np.corrcoef(x, y)[0, 1]
+
+    # Return (0, 0) if r is extremely high, indicating perfect correlation
+    if abs(r_value) >= 0.999999:
+        return 0, 0
+
+    # Calculate the z-score based on the correlation coefficient
+    z = r_value * ((len(x) - 1) ** 0.5) / (1 - r_value ** 2) ** 0.5
+
+    # Degrees of freedom (n - 1 for no intercept)
+    df = len(x) - 1
+
+    # Calculate the non-centrality parameter (ncp) for the alternative hypothesis
+    ncp = beta1_alt / std_err
+
+    # Calculate the critical t value for a two-tailed test
+    t_critical = t.ppf(1 - alpha / 2, df)
+
+    # Calculate the power of the test using the non-central t-distribution
+    power = 1 - (nct.cdf(t_critical, df, ncp) - nct.cdf(-t_critical, df, ncp))
+
+    return z, power
+
+# Sample data
+x = np.array([1, 2, 3, 4, 5,6])
+y = np.array([2, 4, 6, 8, 12,-13])
+
+# Calculate power
+power = calculate_power(x, y)
+print(f"Power of the test: {power}")

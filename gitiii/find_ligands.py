@@ -19,7 +19,7 @@ def load_dataset(dataset_name='interactions_human'):
 
     # Load the dataset using open_binary
     with pkg_resources.open_binary(data, f'{dataset_name}.pth') as f:
-        database = torch.load(f)
+        database = torch.load(f,weights_only=False)
         return database
 
 def get_unique_lists(second_order_list):

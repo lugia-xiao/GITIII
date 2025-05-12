@@ -141,12 +141,12 @@ class Spatial_visualizer():
         if data_dir[-1] != "/":
             data_dir = data_dir + "/"
         self.data_dir=data_dir
-        cell_types = torch.load(os.path.join(os.getcwd(), "data", "processed", "cell_types.pth"))
+        cell_types = torch.load(os.path.join(os.getcwd(), "data", "processed", "cell_types.pth"),weights_only=False)
         self.cell_types = cell_types
-        genes = torch.load(os.path.join(os.getcwd(), "data", "genes.pth"))
+        genes = torch.load(os.path.join(os.getcwd(), "data", "genes.pth"),weights_only=False)
         self.genes = genes
         type_exp_dict = np.load(os.path.join(data_dir, sample + "_TypeExp.npz"), allow_pickle=True)
-        self.results = torch.load(result_dir + "edges_" + sample + ".pth", map_location=torch.device('cpu'))
+        self.results = torch.load(result_dir + "edges_" + sample + ".pth", map_location=torch.device('cpu'),weights_only=False)
 
         # convert to absolute expression
         self.results["y_state"] = self.results["y"]
