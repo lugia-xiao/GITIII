@@ -131,12 +131,12 @@ def preprocess_dataset(df_all,genes,use_log_normalize,species,use_nichenetv2=Tru
     df_all.index=list(range(df_all.shape[0]))
 
     # Do log2(x+1) transform
-    print("Doing log2(x+1) tranform")
     if use_log_normalize:
+        print("Doing log2(x+1) tranform")
         X=df_all.loc[:,genes].values
         X=np.log(X+1)
         df_all.loc[:,genes]=X
-    print("Finish doing log2(x+1) tranform")
+        print("Finish doing log2(x+1) tranform")
 
     # save cell types dictionary
     cell_types=np.unique(df_all.loc[:,"subclass"].values).tolist()
