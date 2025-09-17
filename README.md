@@ -84,8 +84,8 @@ The data structure of the saved influence tensors are:
 - `x['attention_score']` (`torch.tensor`) has shape $(n, num\_neighbors, C)$, where $n$ is the number of cells in this sample, $num\_neighbors$ is the number of neighboring cells used to predict the cell state of the central receiver cell when fitting the model, and $C$ is the number of genes. `x['attention_score'][i,j,k]` tells you the predicted how $i$-th cell's the $j$-th neighboring cell influence the $k$-th gene in the $i$-th cell. Positive values indicate up-regulation and negative values indicate down-regulation.
 - `x['position_x']` (`torch.tensor`) has shape $(n, num\_neighbors+1)$. `x['position_x'][i,0]` indicates the x coordinate of the $i$-th cell in this sample. `x['position_x'][i,j]`  $(j\ne 0)$ indicates the x coordinate the $i$-th cell's $j-1$-th (subscript start from 0) neighboring cell.
 - `x['position_y']` (`torch.tensor`) has shape $(n, num\_neighbors+1)$. `x['position_y'][i,0]` indicates the y coordinate of the $i$-th cell in this sample. `x['position_y'][i,j]`  $(j\ne 0)$ indicates the y coordinate the $i$-th cell's $j-1$-th (subscript start from 0) neighboring cell.
-- `x['cell_type_name']` (`2D python list`) has shape $(n, num\_neighbors+1)$.  `x['cell_type_name'][i,0]` indicates the cell type of the $i$-th cell in this sample. `x['cell_type_name'][i,j]`  $(j\ne 0)$ indicates the y coordinate the $i$-th cell's $j-1$-th (subscript start from 0) neighboring cell.
-- `x['y_pred']` and `x['y']` (`torch.tensor`) both have shape $(n, C)$. `x['y_pred'][i,j]` measures the predicted and real cell state expression of cell $i$ gene $j$, and the same for `x['y']`.
+- `x['cell_type_name']` (`2D python list`) has shape $(n, num\_neighbors+1)$.  `x['cell_type_name'][i][0]` indicates the cell type of the $i$-th cell in this sample. `x['cell_type_name'][i,j]`  $(j\ne 0)$ indicates the y coordinate the $i$-th cell's $j-1$-th (subscript start from 0) neighboring cell.
+- `x['y_pred']` and `x['y']` (`torch.tensor`) both have shape $(n, C)$. `x['y_pred'][i][j]` measures the predicted and real cell state expression of cell $i$ gene $j$, and the same for `x['y']`.
 - `x['NN']` (`numpy array`) has shape $(n, num\_neighbors+1)$. `x['NN'][i,0]` indicates the subscript of $i$-th cell in this sample (which is $i$). `x['position_y'][i,j]`  $(j\ne 0)$ indicates the subscript the $i$-th cell's $j-1$-th (subscript start from 0) neighboring cell.
 
 
@@ -149,6 +149,7 @@ network_analyzer.determine_networks()
 This should results in many `{sample_name}.csv` in `./network/significant_network/`, which has columns of each gene and rows of interaction "{cell_type_A}__{cell_type_B}" (from A to B), positive values indicate up-regulation and negative values indicate down-regulation, values are z-scores, no filtering steps were done on this file so it may also contains insignificant interactions.
 
 **For more detailed tutorial, please refer to tutorial_mouse_brain_MERFISH.nbconvert.ipynb and tutorial_human_AD.nbconvert.ipynb**
+
 
 
 
