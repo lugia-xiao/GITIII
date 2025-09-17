@@ -7,6 +7,7 @@
 GITIII is a python packaged used for analyzing cell-cell interaction (CCI) in imaging-based spatial transcriptomics with minium demand on the ligand-receptor database since many imaging-based ST datasets contain low or even no ligand-receptor pairs in the measured genes.
 
 The main functionalities of GITIII includes:
+
 1. Estimating the influence tensor that describe how each cell is influenced by its top k (default 50) nearest neighbors
 2. Visualizing the relationship between the strength of interaction with the distance between two cells
 3. Visualizing the funcitons of CCI pairs using UMAP: the pair of one sender cell influencing one receiver cell is called a CCI pair, and the estimated influence from the sender cell to the receiver cell (how much the gene expression in the receiver cell would change because of the existing of the sender cell) are treated as the features of the CCI pair. This function aim to visualize how different CCI pairs belonging to different cell type combinations differ from each other in terms of their functions
@@ -38,8 +39,9 @@ pip install gitiii
 ### Data you need:
 
 :param `df_path`: str, the path of your dataset, which should be a .csv file with columns of:
+
 - genes (more than one column), as described below, these columns form the (normalized) expression matrix.
-            values in these columns must be int or float
+      values in these columns must be int or float
 - "centerx": x coordinates of the cells. int or float
 - "centery": y coordinates of the cells. int or float
 - "section": which tissue slide this cell belongs to, since a dataset may contain more than one slide. string
@@ -85,6 +87,8 @@ The data structure of the saved influence tensors are:
 - `x['cell_type_name']` (`2D python list`) has shape $(n, num\_neighbors+1)$.  `x['cell_type_name'][i,0]` indicates the cell type of the $i$-th cell in this sample. `x['cell_type_name'][i,j]`  $(j\ne 0)$ indicates the y coordinate the $i$-th cell's $j-1$-th (subscript start from 0) neighboring cell.
 - `x['y_pred']` and `x['y']` (`torch.tensor`) both have shape $(n, C)$. `x['y_pred'][i,j]` measures the predicted and real cell state expression of cell $i$ gene $j$, and the same for `x['y']`.
 - `x['NN']` (`numpy array`) has shape $(n, num\_neighbors+1)$. `x['NN'][i,0]` indicates the subscript of $i$-th cell in this sample (which is $i$). `x['position_y'][i,j]`  $(j\ne 0)$ indicates the subscript the $i$-th cell's $j-1$-th (subscript start from 0) neighboring cell.
+
+
 
 ### Visualize the spatial patterns
 
