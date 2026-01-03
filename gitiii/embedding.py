@@ -47,7 +47,7 @@ class Embedding(nn.Module):
 
         # for node
         self.cell_encoder1 = FFN(node_dim, in_dim=len(genes))
-        self.cell_encoder2 = nn.Embedding(29,node_dim)
+        self.cell_encoder2 = nn.Embedding(99,node_dim)
 
         # for distance
         self.distance_scaler=nn.Sequential(FFN(edge_dim,out_dim=len(ligands_info[0]),in_dim=5),nn.Sigmoid())
@@ -120,6 +120,7 @@ class Embedding(nn.Module):
         # distance embedding
         embedding = self.distance_embedding(x["distance_matrix"])
         return [node_features,edges.unsqueeze(dim=1),embedding.unsqueeze(dim=1)]
+
 
 
 
