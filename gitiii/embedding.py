@@ -43,11 +43,11 @@ class Embedding(nn.Module):
         self.ligands_info=ligands_info
 
         # for scaling the data
-        self.exp_scaler=nn.Parameter(torch.ones((len(genes))))
+        #self.exp_scaler=nn.Parameter(torch.ones((len(genes))))
 
         # for node
         self.cell_encoder1 = FFN(node_dim, in_dim=len(genes))
-        self.cell_encoder2 = nn.Embedding(99,node_dim)
+        self.cell_encoder2 = nn.Embedding(29,node_dim)
 
         # for distance
         self.distance_scaler=nn.Sequential(FFN(edge_dim,out_dim=len(ligands_info[0]),in_dim=5),nn.Sigmoid())
@@ -84,12 +84,12 @@ class Embedding(nn.Module):
         x=preprocess.process(x)
 
         # node features
-        scaler=torch.square(self.exp_scaler)
+        #scaler=torch.square(self.exp_scaler)
         exp=x["type_exp"]+x["x"]
         exp=torch.where(x["cell_types"].unsqueeze(dim=-1)==x["cell_types"][:,0:1].unsqueeze(dim=-1),x["type_exp"],exp)
-        exp=exp*scaler
+        exp=exp#*scaler
         node_features1=self.cell_encoder1(exp)
-        node_features2 = self.cell_encoder1(x["type_exp"]*scaler)
+        node_features2 = self.cell_encoder1(x["type_exp"])#*scaler)
         node_features=torch.where(x["cell_types"].unsqueeze(dim=-1)==x["cell_types"][:,0:1].unsqueeze(dim=-1),node_features2,node_features1)
 
         if self.use_cell_type_embedding:
@@ -120,7 +120,6 @@ class Embedding(nn.Module):
         # distance embedding
         embedding = self.distance_embedding(x["distance_matrix"])
         return [node_features,edges.unsqueeze(dim=1),embedding.unsqueeze(dim=1)]
-
 
 
 
